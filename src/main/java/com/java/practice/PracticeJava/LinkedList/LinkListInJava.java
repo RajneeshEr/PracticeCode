@@ -16,7 +16,6 @@ class Test{
             list.head=list.head.next;
         }*/
 
-
        /*Append value after some value, */
         list.appendAfterTheParticularNode(list.head,90,400);
 
@@ -105,6 +104,7 @@ public class LinkListInJava {
 
     public void appendAfterTheParticularNode(Node head, int givenNodeData, int newNodeData){
         Node currentNode=head;
+
         boolean flag = false;
         while (currentNode != null){
             if(currentNode.data == givenNodeData){
