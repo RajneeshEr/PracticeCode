@@ -1,122 +1,107 @@
 package com.java.practice.PracticeJava.LinkedList;
 
+
+
+class Node{
+    int data;
+    Node next;
+    public Node(int data) {
+        this.data = data;
+        this.next=null;
+    }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "data=" + data +
+                '}';
+    }
+}
+
 class Test{
 
     public static void main(String[] args) {
-
         LinkListInJava list=new LinkListInJava();
         list.append(10);
         list.append(20);
         list.append(30);
         list.append(50);
+        list.append(60);
 
-        /*Print the list through while loop*/
-       /* while (list.head != null){
-            System.out.println("List : "+ list.head.data);
-            list.head=list.head.next;
-        }*/
+        LinkListInJava list1=new LinkListInJava();
+        list1.append(70);
+        list1.append(20);
+        list1.append(30);
+        list1.append(50);
+        list1.append(60);
 
-       /*Append value after some value, */
-        list.appendAfterTheParticularNode(list.head,90,400);
+        Node reverseNode = list.reverseAdjucentNode(list);
+        System.out.println(reverseNode);
 
-        while (list.head != null){
-            System.out.println("List After adding : "+ list.head.data);
-            list.head=list.head.getNext();
-        }
-
-
-    }
-}
-
-/*Basic structure of Linked List
-* Node contain data and every new data itself a node
-* */
-class Node{
-    int data;
-    Node next;
-
-    public Node(int data) {
-        this.data = data;
-    }
-
-    public Node(int data, Node next) {
-        this.data = data;
-        this.next = next;
-    }
-
-    public int getData() {
-        return data;
-    }
-
-    public void setData(int data) {
-        this.data = data;
-    }
-
-    public Node getNext() {
-        return next;
-    }
-
-    public void setNext(Node next) {
-        this.next = next;
+        //list.appendAfterTheParticularNode(list.head,50,400);
     }
 }
 
 
-/*Linked List Property
-*
-* */
 public class LinkListInJava {
     private int count;
     Node head;
-
-    // constructors
     public LinkListInJava() {
         this.head = null;
         this.count = 0;
     }
-
     public LinkListInJava(Node head) {
         this.head = head;
         this.count=1;
     }
 
-    public int getCount() {
-        return count;
+    public Node append(int data){
+        Node newNode = new Node(data);
+        if(this.head==null){
+            this.head = newNode;
+            return this.head;
+        }
+
+        Node last = this.head;
+        while (last.next != null){
+            last = last.next;
+        }
+        last.next = newNode;
+        return this.head;
     }
 
-    public void setCount(int count) {
-        this.count = count;
-    }
+    public Node reverseAdjucentNode(LinkListInJava list){
 
-    public void append(int data){
-        Node current=this.head;
-        if(this.head == null){
-            this.head =new Node(data);
-            count+=1;
-            return;
+        Node temp =list.head;
+        int coun = 0;
+        while (temp !=null && temp.next !=null){
+            coun++;
+            if (coun % 2 != 0){
+                int k=temp.data;
+                temp.data=temp.next.data;
+                temp.next.data=k;
+            }
+            temp=temp.next;
         }
-        while (current.getNext() != null){
-            current=current.getNext();
-        }
-        current.setNext(new Node(data));
-        count+=1;
+
+        return list.head;
     }
 
     public void appendAfterTheParticularNode(Node head, int givenNodeData, int newNodeData){
         Node currentNode=head;
-
         boolean flag = false;
+
         while (currentNode != null){
             if(currentNode.data == givenNodeData){
                 flag=true;
                 Node nodeAddAfter = currentNode.next;
                 currentNode.next = new Node(newNodeData);
-                Node newNode=currentNode.getNext();
+                Node newNode=currentNode.next;
                 newNode.next = nodeAddAfter;
                 this.count+=1;
                 return;
             }else {
-                head=head.getNext();
+                head=head.next;
                 currentNode=head;
             }
         }
